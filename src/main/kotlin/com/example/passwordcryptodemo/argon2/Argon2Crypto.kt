@@ -14,14 +14,7 @@ import org.springframework.security.crypto.argon2.Argon2PasswordEncoder
 
 object Argon2Crypto {
 
-    // 变体 = argon2id
-    // Salt = 16字节，128位
-    // 散列长度 = 32字节，256位
-    // 迭代 = 10
-    // 记忆 = 1 < 16，或2 ^ 16,65536k，64M
-    // 并行性 = 1
-
-    private val encoder = Argon2PasswordEncoder(16, 32, 1, 65536, 10)
+    private val encoder = Argon2PasswordEncoder()
 
     fun encrypt(password: String): String {
 

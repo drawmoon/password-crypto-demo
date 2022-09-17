@@ -15,25 +15,37 @@ class PasswordCryptoDemoApplication : CommandLineRunner {
 
 	override fun run(vararg args: String?) {
 
-		val stopWatch = StopWatch()
+		println("Original password: $password")
 
-		stopWatch.start()
+		// Argon2
+		val argon2CryptoStopWatch = StopWatch()
+		argon2CryptoStopWatch.start()
+
 		val argon2EncodedStr = Argon2Crypto.encrypt(password)
-		stopWatch.stop()
 
-		println("Password: $password, encoded string: $argon2EncodedStr, Total time: ${stopWatch.totalTimeMillis}ms")
+		argon2CryptoStopWatch.stop()
 
-		stopWatch.start()
-		val bCryptEncodedStr = BCrypto.encrypt(password)
-		stopWatch.stop()
+		println("Crypto algorithm: Argon2, encode result: $argon2EncodedStr, total time: ${argon2CryptoStopWatch.totalTimeMillis}ms")
 
-		println("Password: $password, encoded string: $bCryptEncodedStr, Total time: ${stopWatch.totalTimeMillis}ms")
+		// BCrypt
+		val bCryptoStopWatch = StopWatch()
+		bCryptoStopWatch.start()
 
-		stopWatch.start()
-		val sCryptEncodedStr = SCrypto.encrypt(password)
-		stopWatch.stop()
+		val bCryptoEncodedStr = BCrypto.encrypt(password)
 
-		println("Password: $password, encoded string: $sCryptEncodedStr, Total time: ${stopWatch.totalTimeMillis}ms")
+		bCryptoStopWatch.stop()
+
+		println("Crypto algorithm: BCrypt, encode result: $bCryptoEncodedStr, total time: ${bCryptoStopWatch.totalTimeMillis}ms")
+
+		// SCrypt
+		val sCryptoStopWatch = StopWatch()
+		sCryptoStopWatch.start()
+
+		val sCryptoEncodedStr = SCrypto.encrypt(password)
+
+		sCryptoStopWatch.stop()
+
+		println("Crypto algorithm: SCrypt, encode result: $sCryptoEncodedStr, total time: ${sCryptoStopWatch.totalTimeMillis}ms")
 	}
 }
 
